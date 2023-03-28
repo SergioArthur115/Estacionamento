@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author 182120042
@@ -13,6 +15,8 @@ public class Pessoa {
 
     private int idPessoa;
     private int idadePessoa;
+    private ArrayList<Carro> carros;
+    private Carro idCarro;
     private String cpf;
     private String nomePessoa;
     private String endereco;
@@ -21,9 +25,11 @@ public class Pessoa {
     public Pessoa() {
     }
 
-    public Pessoa(int idPessoa, int idadePessoa, String cpf, String nomePessoa, String endereco, String telefone) {
+    public Pessoa(int idPessoa, int idadePessoa, ArrayList<Carro> carros, Carro idCarro, String cpf, String nomePessoa, String endereco, String telefone) {
         this.idPessoa = idPessoa;
         this.idadePessoa = idadePessoa;
+        this.carros = carros;
+        this.idCarro = idCarro;
         this.cpf = cpf;
         this.nomePessoa = nomePessoa;
         this.endereco = endereco;
@@ -46,6 +52,30 @@ public class Pessoa {
         this.idadePessoa = idadePessoa;
     }
 
+    public ArrayList<Carro> getCarros() {
+        return carros;
+    }
+
+    public void setCarros(ArrayList<Carro> carros) {
+        this.carros = carros;
+    }
+
+    public Carro getIdCarro() {
+        return idCarro;
+    }
+
+    public void setIdCarro(Carro idCarro) {
+        this.idCarro = idCarro;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getNomePessoa() {
         return nomePessoa;
     }
@@ -62,14 +92,6 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -80,7 +102,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" + "idPessoa=" + idPessoa + ", idadePessoa=" + idadePessoa + ", cpf=" + cpf + ", nomePessoa=" + nomePessoa + ", endereco=" + endereco + ", telefone=" + telefone + '}';
+        return "Pessoa{" + "idPessoa=" + idPessoa + ", idadePessoa=" + idadePessoa + ", carros=" + carros + ", idCarro=" + idCarro + ", cpf=" + cpf + ", nomePessoa=" + nomePessoa + ", endereco=" + endereco + ", telefone=" + telefone + '}';
     }
 
 }
