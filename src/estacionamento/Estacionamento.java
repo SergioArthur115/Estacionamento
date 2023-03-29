@@ -6,7 +6,6 @@ import util.Validadores;
 import model.Carro;
 import controller.CCarro;
 import controller.CPessoa;
-import util.Validadores;
 
 public class Estacionamento {// Inicio CLASS
     public static CPessoa cadPessoa = new CPessoa();
@@ -69,19 +68,23 @@ public class Estacionamento {// Inicio CLASS
     public static void cadastrocliente() {// Inicio CADASTRO-CLIENTE
         String nomePessoa;
         String cpf;
-        String endereco;
-        String telefone;
-        int idCliente;
+        String endereco = null;
+        String telefone = null;
         int idadePessoa;
+        int idPessoa;
 
         System.out.println("\n+----------------------------+");
         System.out.println("|                            |");
         System.out.println("|    Cadastro de clientes    |");
         System.out.println("|                            |");
         System.out.println("+----------------------------+");
-        System.out.print(" Informe o CPF: ");
+        System.out.print("Informe o CPF: ");
         boolean cpfis;
+        boolean telefoneis;
+        boolean idadeis;
         int opCPF = 0;
+        int opTEL = 0;
+        int opIDD = 0;
         do {
             cpf = ler.nextLine();
             cpfis = Validadores.isCPF(cpf);
@@ -99,18 +102,49 @@ public class Estacionamento {// Inicio CLASS
             }
         } while (!Validadores.isCPF(cpf));
         if (cadPessoa.getPessoaCPF(cpf) != null) {
-            System.out.println("Cliente já cadastro!.");
+            System.out.println("Cliente já cadastrado!.");
         } else {
             System.out.print("Informe o nome: ");
             nomePessoa = ler.nextLine();
-            System.out.print("Informe a idade: ");
-            idadePessoa = ler.nextInt();
             System.out.print("Informe o telefone: ");
-            telefone = ler.nextLine();
+            do {
+                telefone = ler.nextLine();
+                telefoneis = Validadores.validarTelefone(telefone);
+                if (!telefoneis) {
+                    System.out.println("Telefone inválido, \ndeseja tentar novamente ? 1 - Sim | 2 - Não");
+                    opTEL = lerNum();
+
+                    if (opTEL == 1) {
+                        System.out.println("Informe o telefone: ");
+                    }
+                    if (opTEL == 2) {
+                        System.out.println("Cadastro cancelado pelo usuário!");
+                        return;
+                    }
+                }
+            } while (!Validadores.validarTelefone(telefone));
+            System.out.print("Informe a idade: ");
+            do {
+                idadePessoa = lerNum();
+                idadeis = Validadores.validarIdade(idadePessoa);
+                if (!idadeis) {
+                    System.out.println("Idade inválida, deseja tentar novamente ? 1 - Sim | 2 - Não");
+                    opIDD = lerNum();
+
+                    if (opIDD == 1) {
+                        System.out.println("Informe a idade(Faixa de idade 18 a 100 anos): ");
+                        idadePessoa = lerNum();
+                    }
+                    if (opIDD == 2) {
+                        System.out.println("Cadastro cancelado pelo usuário!");
+                        return;
+                    }
+                }
+            } while (!Validadores.validarIdade(idadePessoa));
+            idPessoa = cadPessoa.geraID();
             System.out.print("Informe o endereço: ");
             endereco = ler.nextLine();
-            idCliente = cadPessoa.geraID();
-            Pessoa pes = new Pessoa(idadePessoa, idadePessoa, null, null, cpf, nomePessoa, endereco, telefone);
+            Pessoa pes = new Pessoa(idPessoa, idadePessoa, null, null, cpf, nomePessoa, endereco, telefone);
             cadPessoa.addPessoa(pes);
             System.out.println("Cliente cadastrado com sucesso!.");
         }
@@ -122,12 +156,26 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("|     Remoção de clientes    |");
         System.out.println("|                            |");
         System.out.println("+----------------------------+");
-        System.out.print(" Informe o CPF: ");
+        System.out.print("Informe o CPF: ");
         String cpf = ler.next();
+        int op = 0;
         if (Validadores.isCPF(cpf)) {
             Pessoa pes = cadPessoa.getPessoaCPF(cpf);
             if (pes != null) {
-                System.out.println("Cliente deletado com sucesso!.");
+                System.out.println("CPF: " + pes.getCpf());
+                System.out.println("Nome: " + pes.getNomePessoa());
+                System.out.println("Idade: " + pes.getIdadePessoa());
+                System.out.println("Telefone: " + pes.getTelefone());
+                System.out.println("Deseja excluir o usuário ? 1 - Sim | 2 - Não");
+                op = lerNum();
+                if (op == 1) {
+                    cadPessoa.removePessoa(pes);
+                    System.out.println("Cliente deletado com sucesso!.");
+                }
+                if (op == 2) {
+                    System.out.println("Remoção cancelada pelo usuário!");
+                    return;
+                }
             } else {
                 System.out.println("Cliente não consta na base de dados!.");
             }
@@ -141,8 +189,9 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("|      Edição de clientes    |");
         System.out.println("|                            |");
         System.out.println("+----------------------------+");
-        System.out.print(" Informe o CPF: ");
+        System.out.print("Informe o CPF: ");
         String cpf = ler.nextLine();
+        int op = 0;
         if (Validadores.isCPF(cpf)) {
             Pessoa pes = cadPessoa.getPessoaCPF(cpf);
             if (pes != null) {
@@ -171,6 +220,14 @@ public class Estacionamento {// Inicio CLASS
                 }
             } else {
                 System.out.println("Cliente não consta na base de dados!.");
+                System.out.println("Deseja cadastra-lo ? 1 - Sim | 2 - Não");
+                op = lerNum();
+                if (op == 1) {
+                    cadastrocliente();
+                }
+                if (op == 2) {
+                    return;
+                }
             }
         }
     }// Fim EDITA-CLIENTE
@@ -189,6 +246,86 @@ public class Estacionamento {// Inicio CLASS
 
     // VEICULOS
     public static void cadastroveiculo() {// Inicio CADASTRO-VEICULO
+        int idCarro;
+        String cpf;
+        String placa = null;
+        String cor = null;
+        String modelo = null;
+        Pessoa idPessoa = null;
+        String renavam;
+        boolean renavamis;
+        boolean cpfis;
+        int opRN = 0;
+        System.out.println("\n+----------------------------+");
+        System.out.println("|                            |");
+        System.out.println("|    Cadastro de veiculos    |");
+        System.out.println("|                            |");
+        System.out.println("+----------------------------+");
+        System.out.print("Informe o CPF: ");
+        do {
+            cpf = ler.nextLine();
+            if (Validadores.isCPF(cpf)) {
+                idPessoa = cadPessoa.getPessoaCPF(cpf);
+                if (idPessoa == null) {
+                    System.out.println("Cliente não cadastrado!.");
+                    System.out.println("Deseja cadastra-lo ? 1 - Sim | 2 - Não");
+                    opRN = lerNum();
+                    if (opRN == 1) {
+                        cadastrocliente();
+                    }
+                    if (opRN == 2) {
+                        return;
+                    }
+                }
+            } else {
+                cpf = ler.nextLine();
+                cpfis = Validadores.isCPF(cpf);
+                if (!cpfis) {
+                    System.out.println("CPF Inválido \nDeseja tentar novamente ? 1- Sim | 2- Não");
+                    opRN = lerNum();
+
+                    if (opRN == 1) {
+                        System.out.println("Informe o CPF: ");
+                    }
+                    if (opRN == 2) {
+                        System.out.println("Cadastro cancelado pelo usuário!");
+                        return;
+                    }
+                }
+            }
+
+        } while (!Validadores.isCPF(cpf));
+        System.out.print("Informe o Renavam: ");
+        do {
+            renavam = ler.nextLine();
+            renavamis = Validadores.validarRenavam(renavam);
+            if (!renavamis) {
+                System.out.println("Renavam Inválido \nDeseja tentar novamente ? 1- Sim | 2- Não");
+                opRN = lerNum();
+
+                if (opRN == 1) {
+                    System.out.print("Informe o renavam: ");
+                }
+                if (opRN == 2) {
+                    System.out.println("Cadastro cancelado pelo usuário!");
+                    return;
+                }
+            }
+        } while (!Validadores.validarRenavam(renavam));
+        if (cadCarro.getCarro(renavam) != null) {
+            System.out.println("Veiculo já cadastro!.");
+        } else {
+            System.out.print("Informe a placa: ");
+            placa = ler.nextLine();
+            System.out.print("Informe a cor: ");
+            cor = ler.nextLine();
+            System.out.print("Informe o modelo: ");
+            modelo = ler.nextLine();
+        }
+        idCarro = cadCarro.geraID();
+        Carro car = new Carro(idCarro, placa, cor, modelo, idPessoa, renavam);
+        cadCarro.addCarro(car);
+        System.out.println("Carro cadastrado com sucesso!.");
 
     }// Fim CADASTRO-VEICULO
 
@@ -203,6 +340,8 @@ public class Estacionamento {// Inicio CLASS
      // VEICULOS
 
     public static void main(String[] args) {// Inicio MAIN
+        cadPessoa.mockPessoas();
+        cadCarro.mockCarro();
         int opM;
         do {
             Menu();
@@ -219,7 +358,7 @@ public class Estacionamento {// Inicio CLASS
                                 if (tpger.equals("Cliente")) {
                                     cadastrocliente();
                                 }
-                                if (tpger.equals("Carro")) {
+                                if (tpger.equals("Veiculo")) {
                                     cadastroveiculo();
                                 }
                                 break;
@@ -227,7 +366,7 @@ public class Estacionamento {// Inicio CLASS
                                 if (tpger.equals("Cliente")) {
                                     deletarcliente();
                                 }
-                                if (tpger.equals("Carro")) {
+                                if (tpger.equals("Veiculo")) {
                                     deletarveiculo();
                                 }
                                 break;
@@ -235,7 +374,7 @@ public class Estacionamento {// Inicio CLASS
                                 if (tpger.equals("Cliente")) {
                                     editarcliente();
                                 }
-                                if (tpger.equals("Carro")) {
+                                if (tpger.equals("Veiculo")) {
                                     editarveiculo();
                                 }
                                 break;
@@ -243,7 +382,7 @@ public class Estacionamento {// Inicio CLASS
                                 if (tpger.equals("Cliente")) {
                                     listarcliente();
                                 }
-                                if (tpger.equals("Carro")) {
+                                if (tpger.equals("Veiculo")) {
                                     listarveiculo();
                                 }
                                 break;

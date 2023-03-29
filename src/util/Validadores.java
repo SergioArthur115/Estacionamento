@@ -89,7 +89,7 @@ public class Validadores {
         return matcher.matches();
     }
 
-    public boolean validarRenavam(String renavam) {
+    public static boolean validarRenavam(String renavam) {
         // Pegando como exemplo o renavam = 639884962
 
         // Completa com zeros a esquerda se for no padrao antigo de 9 digitos
@@ -137,7 +137,8 @@ public class Validadores {
         // Faz-se a conta 11 (valor fixo) - mod11 = 11 - 9 = 2
         int ultimoDigitoCalculado = 11 - mod11;
 
-        // ultimoDigito = Caso o valor calculado anteriormente seja 10 ou 11, transformo ele em 0
+        // ultimoDigito = Caso o valor calculado anteriormente seja 10 ou 11, transformo
+        // ele em 0
         // caso contrario, eh o proprio numero
         ultimoDigitoCalculado = (ultimoDigitoCalculado >= 10 ? 0 : ultimoDigitoCalculado);
 
