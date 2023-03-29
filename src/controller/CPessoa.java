@@ -1,27 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import java.util.ArrayList;
 import model.Pessoa;
 
-/**
- *
- * @author 182120042
- */
+
 public class CPessoa {
 
     ArrayList<Pessoa> pessoas = new ArrayList<>();
     int idPessoa = 1;
 
-    /**
-     * geraID gerencia a geração de id's para pessoa
-     *
-     * @return
-     */
+  
     public int geraID() {
         return this.idPessoa++;
     }
