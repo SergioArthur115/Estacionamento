@@ -1,6 +1,5 @@
 package model;
 
-import java.util.logging.Logger;
 
 public class Carro {
 
