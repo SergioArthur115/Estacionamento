@@ -8,6 +8,7 @@ import controller.CCarro;
 import controller.CPessoa;
 
 public class Estacionamento {// Inicio CLASS
+
     public static CPessoa cadPessoa = new CPessoa();
     public static CCarro cadCarro = new CCarro();
     public static Scanner ler = new Scanner(System.in);
@@ -24,7 +25,7 @@ public class Estacionamento {// Inicio CLASS
         }
         return 0;
     }// Fim LerNUM
-     // LER
+    // LER
 
     // MENUS
     public static void Menu() { // Inicio MENU
@@ -62,7 +63,7 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("+--+-----------------+--+");
         System.out.print("  Escolha uma opção: ");
     }// Fim SUBMENU
-     // MENUS
+    // MENUS
 
     // CLIENTES
     public static void cadastrocliente() {// Inicio CADASTRO-CLIENTE
@@ -179,8 +180,9 @@ public class Estacionamento {// Inicio CLASS
             } else {
                 System.out.println("Cliente não consta na base de dados!.");
             }
-        } else
+        } else {
             System.out.println("CPF inválido!.");
+        }
     }// Fim DELETA-CLIENTE
 
     public static void editarcliente() {// Inicio EDITA-CLIENTE
@@ -242,7 +244,7 @@ public class Estacionamento {// Inicio CLASS
             System.out.println("Endereço: " + pes.getEndereco());
         }
     }// Fim LISTA-CLIENTE
-     // CLIENTES
+    // CLIENTES
 
     // VEICULOS
     public static void cadastroveiculo() {// Inicio CADASTRO-VEICULO
@@ -328,16 +330,71 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("Carro cadastrado com sucesso!.");
 
     }// Fim CADASTRO-VEICULO
-
-    public static void deletarveiculo() {// Inicio DELETA-VEICULO
-    }// Fim DELETA-VEICULO
-
+    
+    public static void deletarVeiculo() {
+        System.out.println("|Deletar Veiculo|");
+        System.out.print("Informe o Renavam: ");
+        String renav1 = ler.nextLine();
+        if (Validadores.validarRenavam(renav1)) {
+            Carro cli = cadCarro.getCarro(renav1);
+            if (cli != null) {
+                cadCarro.removeCliente(cli);
+                System.out.println("Carro deletado com sucesso!");
+            } else {
+                System.out.println("Renavam não consta na base de dados!");
+            }
+        } else {
+            System.out.println("Renavam inválido!");
+        }
+    }
+   
     public static void editarveiculo() {// Inicio EDITA-VEICULO
+    System.out.println("|Editar Veiculo|");
+        System.out.print("Informe o Renavam: ");
+        String ren1v = ler.nextLine();
+        Carro eli = cadCarro.getCarro(ren1v);
+        if (eli != null) {
+            System.out.println("1 - Cor : " + eli.getCor());
+            System.out.println("2 - Modelo : " + eli.getModelo());
+            System.out.println("3 - Placa: " + eli.getPlaca());
+            System.out.println("4 - Todos as campos acima");
+            System.out.print("Informe o campo a qual deseja alterar:");
+            int opEditar = lerNum();
+
+            if (opEditar == 1 || opEditar == 4) {
+                System.out.print("Informe a nova Cor: ");
+                eli.setCor(ler.nextLine());
+            }
+            if (opEditar == 2 || opEditar == 4) {
+                System.out.print("Informe o novo Modelo:  ");
+                eli.setModelo(ler.nextLine());
+            }
+            if (opEditar == 3 || opEditar == 4) {
+                System.out.print("Informe a nova placa: ");
+                eli.setPlaca(ler.nextLine());
+            }
+            if (opEditar < 1 || opEditar > 4) {
+                System.out.println("Opção inválida");
+            }
+            
+            System.out.println("Veiculo: \n" + eli.toString());
+        } else {
+            System.out.println("Renavam não cadastrado!");
+        }
     }// Fim EDITA-VEICULO
 
     public static void listarveiculo() {// Inicio LISTA-VEICULO
+        System.out.print("Lista de Veiculos: ");
+        
+        for (Carro cli : cadCarro.getCarros()) {
+            System.out.println("Modelo: " + cli.getModelo());
+            System.out.println("Cor: " + cli.getCor());
+            System.out.println("Placa : " + cli.getPlaca());
+            System.out.println("Renavam: " + cli.getRenavam());
+            
+  
+    }
     }// Fim LISTA-VEICULO
-     // VEICULOS
 
     public static void main(String[] args) {// Inicio MAIN
         cadPessoa.mockPessoas();
@@ -367,7 +424,7 @@ public class Estacionamento {// Inicio CLASS
                                     deletarcliente();
                                 }
                                 if (tpger.equals("Veiculo")) {
-                                    deletarveiculo();
+                                    deletarVeiculo();
                                 }
                                 break;
                             case 3:
@@ -381,9 +438,11 @@ public class Estacionamento {// Inicio CLASS
                             case 4:
                                 if (tpger.equals("Cliente")) {
                                     listarcliente();
+                                    
                                 }
                                 if (tpger.equals("Veiculo")) {
                                     listarveiculo();
+                                    
                                 }
                                 break;
                             case 0:
@@ -401,5 +460,7 @@ public class Estacionamento {// Inicio CLASS
             }
         } while (opM != 0);
     }// Fim MAIN
+
+   
 
 }// Fim CLASS
