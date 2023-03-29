@@ -150,4 +150,13 @@ public class Validadores {
         }
         return false;
     }
+
+    public static boolean validarIdade(int idade) {
+        if (idade < 18 || idade > 100) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }
