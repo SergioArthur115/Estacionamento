@@ -219,6 +219,7 @@ public class Estacionamento {// Inicio CLASS
                 if (opEd == 2 || opEd == 5) {
                     System.out.print("Informe a idade: ");
                     pes.setIdadePessoa(ler.nextInt());
+                    ler.nextLine();
                 }
                 if (opEd == 3 || opEd == 5) {
                     System.out.print("Informe o telefone: ");
