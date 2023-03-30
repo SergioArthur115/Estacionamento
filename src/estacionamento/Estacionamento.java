@@ -25,7 +25,7 @@ public class Estacionamento {// Inicio CLASS
         }
         return 0;
     }// Fim LerNUM
-    // LER
+     // LER
 
     // MENUS
     public static void Menu() { // Inicio MENU
@@ -63,7 +63,7 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("+--+-----------------+--+");
         System.out.print("  Escolha uma opção: ");
     }// Fim SUBMENU
-    // MENUS
+     // MENUS
 
     // CLIENTES
     public static void cadastrocliente() {// Inicio CADASTRO-CLIENTE
@@ -94,7 +94,7 @@ public class Estacionamento {// Inicio CLASS
                 opCPF = lerNum();
 
                 if (opCPF == 1) {
-                    System.out.println("Informe o CPF: ");
+                    System.out.print("Informe o CPF: ");
                 }
                 if (opCPF == 2) {
                     System.out.println("Cadastro cancelado pelo usuário!");
@@ -112,11 +112,11 @@ public class Estacionamento {// Inicio CLASS
                 telefone = ler.nextLine();
                 telefoneis = Validadores.validarTelefone(telefone);
                 if (!telefoneis) {
-                    System.out.println("Telefone inválido, \ndeseja tentar novamente ? 1 - Sim | 2 - Não");
+                    System.out.println("Telefone inválido \nDeseja tentar novamente ? 1 - Sim | 2 - Não");
                     opTEL = lerNum();
 
                     if (opTEL == 1) {
-                        System.out.println("Informe o telefone: ");
+                        System.out.print("Informe o telefone: ");
                     }
                     if (opTEL == 2) {
                         System.out.println("Cadastro cancelado pelo usuário!");
@@ -125,11 +125,11 @@ public class Estacionamento {// Inicio CLASS
                 }
             } while (!Validadores.validarTelefone(telefone));
             System.out.print("Informe a idade: ");
+            idadePessoa = lerNum();
+            idadeis = Validadores.validarIdade(idadePessoa);
             do {
-                idadePessoa = lerNum();
-                idadeis = Validadores.validarIdade(idadePessoa);
                 if (!idadeis) {
-                    System.out.println("Idade inválida, deseja tentar novamente ? 1 - Sim | 2 - Não");
+                    System.out.println("Idade inválida \nDeseja tentar novamente ? 1 - Sim | 2 - Não");
                     opIDD = lerNum();
 
                     if (opIDD == 1) {
@@ -202,7 +202,7 @@ public class Estacionamento {// Inicio CLASS
                 System.out.println(" 3 - Telefone: \t" + pes.getTelefone());
                 System.out.println(" 4 - Endereço: \t" + pes.getEndereco());
                 System.out.println(" 5 - Todos acima \t");
-                System.out.print("Qual campo gostaria de alterar ?: ");
+                System.out.print("Qual campo gostaria de alterar: ");
                 int opEd = lerNum();
                 if (opEd == 1 || opEd == 5) {
                     System.out.print("Informe o nome: ");
@@ -244,7 +244,7 @@ public class Estacionamento {// Inicio CLASS
             System.out.println("Endereço: " + pes.getEndereco());
         }
     }// Fim LISTA-CLIENTE
-    // CLIENTES
+     // CLIENTES
 
     // VEICULOS
     public static void cadastroveiculo() {// Inicio CADASTRO-VEICULO
@@ -330,15 +330,19 @@ public class Estacionamento {// Inicio CLASS
         System.out.println("Carro cadastrado com sucesso!.");
 
     }// Fim CADASTRO-VEICULO
-    
+
     public static void deletarVeiculo() {
-        System.out.println("|Deletar Veiculo|");
+        System.out.println("\n+----------------------------+");
+        System.out.println("|                            |");
+        System.out.println("|     Remover de veiculos    |");
+        System.out.println("|                            |");
+        System.out.println("+----------------------------+");
         System.out.print("Informe o Renavam: ");
         String renav1 = ler.nextLine();
         if (Validadores.validarRenavam(renav1)) {
-            Carro cli = cadCarro.getCarro(renav1);
-            if (cli != null) {
-                cadCarro.removeCliente(cli);
+            Carro car = cadCarro.getCarro(renav1);
+            if (car != null) {
+                cadCarro.removeCliente(car);
                 System.out.println("Carro deletado com sucesso!");
             } else {
                 System.out.println("Renavam não consta na base de dados!");
@@ -347,53 +351,52 @@ public class Estacionamento {// Inicio CLASS
             System.out.println("Renavam inválido!");
         }
     }
-   
+
     public static void editarveiculo() {// Inicio EDITA-VEICULO
-    System.out.println("|Editar Veiculo|");
+        System.out.println("\n+----------------------------+");
+        System.out.println("|                            |");
+        System.out.println("|      Editar de veiculos    |");
+        System.out.println("|                            |");
+        System.out.println("+----------------------------+");
         System.out.print("Informe o Renavam: ");
         String ren1v = ler.nextLine();
-        Carro eli = cadCarro.getCarro(ren1v);
-        if (eli != null) {
-            System.out.println("1 - Cor : " + eli.getCor());
-            System.out.println("2 - Modelo : " + eli.getModelo());
-            System.out.println("3 - Placa: " + eli.getPlaca());
+        Carro car = cadCarro.getCarro(ren1v);
+        if (car != null) {
+            System.out.println("1 - Cor : " + car.getCor());
+            System.out.println("2 - Modelo : " + car.getModelo());
+            System.out.println("3 - Placa: " + car.getPlaca());
             System.out.println("4 - Todos as campos acima");
-            System.out.print("Informe o campo a qual deseja alterar:");
+            System.out.print("Informe o campo a qual deseja alterar: ");
             int opEditar = lerNum();
 
             if (opEditar == 1 || opEditar == 4) {
                 System.out.print("Informe a nova Cor: ");
-                eli.setCor(ler.nextLine());
+                car.setCor(ler.nextLine());
             }
             if (opEditar == 2 || opEditar == 4) {
                 System.out.print("Informe o novo Modelo:  ");
-                eli.setModelo(ler.nextLine());
+                car.setModelo(ler.nextLine());
             }
             if (opEditar == 3 || opEditar == 4) {
                 System.out.print("Informe a nova placa: ");
-                eli.setPlaca(ler.nextLine());
+                car.setPlaca(ler.nextLine());
             }
             if (opEditar < 1 || opEditar > 4) {
                 System.out.println("Opção inválida");
             }
-            
-            System.out.println("Veiculo: \n" + eli.toString());
         } else {
             System.out.println("Renavam não cadastrado!");
         }
     }// Fim EDITA-VEICULO
 
-    public static void listarveiculo() {// Inicio LISTA-VEICULO
-        System.out.print("Lista de Veiculos: ");
-        
-        for (Carro cli : cadCarro.getCarros()) {
-            System.out.println("Modelo: " + cli.getModelo());
-            System.out.println("Cor: " + cli.getCor());
-            System.out.println("Placa : " + cli.getPlaca());
-            System.out.println("Renavam: " + cli.getRenavam());
-            
-  
-    }
+    public static void listarveiculo() {// Inicio LISTA-VEICULO       
+        for (Carro car : cadCarro.getCarros()) {
+            System.out.println("+-------------------------------------+");
+            System.out.println("Renavam: " + car.getRenavam());
+            System.out.println("Modelo: " + car.getModelo());
+            System.out.println("Placa : " + car.getPlaca());
+            System.out.println("Cor: " + car.getCor());
+        }
     }// Fim LISTA-VEICULO
 
     public static void main(String[] args) {// Inicio MAIN
@@ -438,11 +441,11 @@ public class Estacionamento {// Inicio CLASS
                             case 4:
                                 if (tpger.equals("Cliente")) {
                                     listarcliente();
-                                    
+
                                 }
                                 if (tpger.equals("Veiculo")) {
                                     listarveiculo();
-                                    
+
                                 }
                                 break;
                             case 0:
@@ -460,7 +463,5 @@ public class Estacionamento {// Inicio CLASS
             }
         } while (opM != 0);
     }// Fim MAIN
-
-   
 
 }// Fim CLASS
