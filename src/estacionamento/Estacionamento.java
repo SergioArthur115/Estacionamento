@@ -328,21 +328,21 @@ public class Estacionamento {// Inicio CLASS
             renavam = ler.nextLine();
             renavamis = Validadores.validarRenavam(renavam);
             if (!renavamis) {
-                System.out.println("Renavam já cadastrado \nDeseja tentar novamente ? 1- Sim | 2- Não");
-                opRN = lerNum();
-
-                if (opRN == 1) {
-                    System.out.print("Informe o renavam: ");
-                }
-                if (opRN == 2) {
-                    System.out.println("Cadastro cancelado pelo usuário!");
-                    return;
-                }
+                System.out.println("Renavam já cadastrado");
             }
         } while (!Validadores.validarRenavam(renavam));
-        if (cadCarro.getCarro(renavam) != null) {
-            System.out.println("Veiculo já cadastro!.");
+        if (cadCarro.getCarro(renavam) == null) {
+            System.out.println("Renavam já cadastrado \nDeseja tentar novamente ? 1- Sim | 2- Não");
+            opRN = lerNum();
+            if (opRN == 1) {
+                System.out.print("Informe o renavam: ");
+            }
+            if (opRN == 2) {
+                System.out.println("Cadastro cancelado pelo usuário!");
+                return;
+            }
         } else {
+
             System.out.print("Informe a placa: ");
             placa = ler.nextLine();
             System.out.print("Informe a cor: ");
@@ -350,10 +350,9 @@ public class Estacionamento {// Inicio CLASS
             System.out.print("Informe o modelo: ");
             modelo = ler.nextLine();
         }
-        idCarro = cadCarro.geraID();
-        Carro car = new Carro(idCarro, placa, cor, modelo, idPessoa, renavam);
-        cadCarro.addCarro(car);
-        System.out.println("Carro cadastrado com sucesso!.");
+        idCarro = cadCarro.geraID();   
+    Carro car = new Carro(idCarro, placa, cor, modelo, idPessoa,
+            renavam);cadCarro.addCarro(car);System.out.println("Carro cadastrado com sucesso!.");
 
     }// Fim CADASTRO-VEICULO
 
@@ -514,7 +513,7 @@ public class Estacionamento {// Inicio CLASS
                         System.out.println("Modelo: " + car.getModelo());
                         System.out.println("Placa : " + car.getPlaca());
                         System.out.println("Cor: " + car.getCor());
-                    }else{
+                    } else {
                         return;
                     }
                 }
