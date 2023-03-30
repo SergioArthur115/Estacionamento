@@ -194,14 +194,31 @@ public class Estacionamento {// Inicio CLASS
     }// Fim DELETA-CLIENTE
 
     public static void editarcliente() {// Inicio EDITA-CLIENTE
+        int op;
+        String cpf;
+        boolean cpfis;
         System.out.println("\n+----------------------------+");
         System.out.println("|                            |");
         System.out.println("|      Edição de clientes    |");
         System.out.println("|                            |");
         System.out.println("+----------------------------+");
         System.out.print("Informe o CPF: ");
-        String cpf = ler.nextLine();
-        int op = 0;
+        do {
+            cpf = ler.nextLine();
+            cpfis = Validadores.isCPF(cpf);
+            if (!cpfis) {
+                System.out.println("CPF Inválido \nDeseja tentar novamente ? 1- Sim | 2- Não");
+                op = lerNum();
+
+                if (op == 1) {
+                    System.out.print("Informe o CPF: ");
+                }
+                if (op == 2) {
+                    System.out.println("Cadastro cancelado pelo usuário!");
+                    return;
+                }
+            }
+        } while (!Validadores.isCPF(cpf));
         if (Validadores.isCPF(cpf)) {
             Pessoa pes = cadPessoa.getPessoaCPF(cpf);
             if (pes != null) {
@@ -311,7 +328,7 @@ public class Estacionamento {// Inicio CLASS
             renavam = ler.nextLine();
             renavamis = Validadores.validarRenavam(renavam);
             if (!renavamis) {
-                System.out.println("Renavam Inválido \nDeseja tentar novamente ? 1- Sim | 2- Não");
+                System.out.println("Renavam já cadastrado \nDeseja tentar novamente ? 1- Sim | 2- Não");
                 opRN = lerNum();
 
                 if (opRN == 1) {
@@ -341,6 +358,7 @@ public class Estacionamento {// Inicio CLASS
     }// Fim CADASTRO-VEICULO
 
     public static void deletarVeiculo() {// Inicio DELETA-VEICULO
+        int op;
         System.out.println("\n+----------------------------+");
         System.out.println("|                            |");
         System.out.println("|     Remover de veiculos    |");
@@ -350,14 +368,29 @@ public class Estacionamento {// Inicio CLASS
         String renav1 = ler.nextLine();
         if (Validadores.validarRenavam(renav1)) {
             Carro car = cadCarro.getCarro(renav1);
-            if (car != null) {
-                cadCarro.removeCliente(car);
-                System.out.println("Carro deletado com sucesso!");
-            } else {
-                System.out.println("Renavam não consta na base de dados!");
+            if (Validadores.validarRenavam(renav1)) {
+                if (car != null) {
+                    System.out.println("Renavam: " + car.getRenavam());
+                    System.out.println("Modelo: " + car.getModelo());
+                    System.out.println("Cor: " + car.getCor());
+                    System.out.println("Placa: " + car.getPlaca());
+                    System.out.println("Deseja excluir o veiculo ? 1 - Sim | 2 - Não");
+                    op = lerNum();
+                    if (op == 1) {
+                        cadCarro.removeCarro(car);
+                        ;
+                        System.out.println("Veiculo deletado com sucesso!.");
+                    }
+                    if (op == 2) {
+                        System.out.println("Remoção cancelada pelo usuário!");
+                        return;
+                    } else {
+                        System.out.println("Renavam não consta na base de dados!");
+                    }
+                } else {
+                    System.out.println("Renavam inválido!");
+                }
             }
-        } else {
-            System.out.println("Renavam inválido!");
         }
     }// Fim DELETA-VEICULO
 
@@ -471,16 +504,18 @@ public class Estacionamento {// Inicio CLASS
         }
         if (op == 4) {
             for (Pessoa pes : cadPessoa.getPessoas()) {
+                System.out.println("+-------------------------------------+");
+                System.out.println("CPF: " + pes.getCpf());
+                System.out.println("Nome: " + pes.getNomePessoa());
+                System.out.println("Idade: " + pes.getIdadePessoa());
                 for (Carro car : cadCarro.getCarros()) {
-                    if (car.getIdPessoa().equals(pes.getIdPessoa())) {
-                        System.out.println("+-------------------------------------+");
-                        System.out.println("CPF: " + pes.getCpf());
-                        System.out.println("Nome: " + pes.getNomePessoa());
-                        System.out.println("Idade: " + pes.getIdadePessoa());
+                    if (car.getIdPessoa().getIdPessoa() == (pes.getIdPessoa())) {
                         System.out.println("Renavam: " + car.getRenavam());
                         System.out.println("Modelo: " + car.getModelo());
                         System.out.println("Placa : " + car.getPlaca());
                         System.out.println("Cor: " + car.getCor());
+                    }else{
+                        return;
                     }
                 }
             }

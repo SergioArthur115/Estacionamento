@@ -21,7 +21,7 @@ public class CCarro {
         return this.Carros;
     }
 
-    public void removeCliente(Carro c) {
+    public void removeCarro(Carro c) {
         this.Carros.remove(c);
     }
 

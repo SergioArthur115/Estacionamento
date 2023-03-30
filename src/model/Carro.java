@@ -74,5 +74,4 @@ public class Carro {
     public String toString() {
         return "Carro{" + "idCarro=" + idCarro + ", placa=" + placa + ", cor=" + cor + ", modelo=" + modelo + ", idPessoa=" + idPessoa + ", renavam=" + renavam + '}';
     }
-
 }
