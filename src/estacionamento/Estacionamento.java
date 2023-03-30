@@ -29,7 +29,7 @@ public class Estacionamento {// Inicio CLASS
 
     // MENUS
     public static void Menu() { // Inicio MENU
-        System.out.println("+--------------------+");
+        System.out.println("\n+--------------------+");
         System.out.println("|   ESTACIONAMENTO   |");
         System.out.println("+--------------------+");
         System.out.println("|                    |");
@@ -52,7 +52,7 @@ public class Estacionamento {// Inicio CLASS
                 break;
         }
 
-        System.out.println("+-----------------------+");
+        System.out.println("\n+-----------------------+");
         System.out.println("|        " + tpger + "        |");
         System.out.println("+--+-----------------+--+");
         System.out.println("|  | 1 - Cadastrar   |  |");
@@ -83,20 +83,18 @@ public class Estacionamento {// Inicio CLASS
         boolean cpfis;
         boolean telefoneis;
         boolean idadeis;
-        int opCPF = 0;
-        int opTEL = 0;
-        int opIDD = 0;
+        int op = 0;
         do {
             cpf = ler.nextLine();
             cpfis = Validadores.isCPF(cpf);
             if (!cpfis) {
                 System.out.println("CPF Inválido \nDeseja tentar novamente ? 1- Sim | 2- Não");
-                opCPF = lerNum();
+                op = lerNum();
 
-                if (opCPF == 1) {
+                if (op == 1) {
                     System.out.print("Informe o CPF: ");
                 }
-                if (opCPF == 2) {
+                if (op == 2) {
                     System.out.println("Cadastro cancelado pelo usuário!");
                     return;
                 }
@@ -107,18 +105,23 @@ public class Estacionamento {// Inicio CLASS
         } else {
             System.out.print("Informe o nome: ");
             nomePessoa = ler.nextLine();
+            if (nomePessoa.isEmpty()) {
+                System.out.println("O nome não pode ser vazio");
+                System.out.print("Informe o nome: ");
+                nomePessoa = ler.nextLine();
+            }
             System.out.print("Informe o telefone: ");
             do {
                 telefone = ler.nextLine();
                 telefoneis = Validadores.validarTelefone(telefone);
                 if (!telefoneis) {
                     System.out.println("Telefone inválido \nDeseja tentar novamente ? 1 - Sim | 2 - Não");
-                    opTEL = lerNum();
+                    op = lerNum();
 
-                    if (opTEL == 1) {
+                    if (op == 1) {
                         System.out.print("Informe o telefone: ");
                     }
-                    if (opTEL == 2) {
+                    if (op == 2) {
                         System.out.println("Cadastro cancelado pelo usuário!");
                         return;
                     }
@@ -130,13 +133,13 @@ public class Estacionamento {// Inicio CLASS
             do {
                 if (!idadeis) {
                     System.out.println("Idade inválida \nDeseja tentar novamente ? 1 - Sim | 2 - Não");
-                    opIDD = lerNum();
+                    op = lerNum();
 
-                    if (opIDD == 1) {
+                    if (op == 1) {
                         System.out.println("Informe a idade(Faixa de idade 18 a 100 anos): ");
                         idadePessoa = lerNum();
                     }
-                    if (opIDD == 2) {
+                    if (op == 2) {
                         System.out.println("Cadastro cancelado pelo usuário!");
                         return;
                     }
@@ -145,6 +148,11 @@ public class Estacionamento {// Inicio CLASS
             idPessoa = cadPessoa.geraID();
             System.out.print("Informe o endereço: ");
             endereco = ler.nextLine();
+            if (endereco.isEmpty()) {
+                System.out.println("O endedreço não pode ser vazio");
+                System.out.print("Informe o endereço: ");
+                endereco = ler.nextLine();
+            }
             Pessoa pes = new Pessoa(idPessoa, idadePessoa, null, null, cpf, nomePessoa, endereco, telefone);
             cadPessoa.addPessoa(pes);
             System.out.println("Cliente cadastrado com sucesso!.");
@@ -331,7 +339,7 @@ public class Estacionamento {// Inicio CLASS
 
     }// Fim CADASTRO-VEICULO
 
-    public static void deletarVeiculo() {
+    public static void deletarVeiculo() {// Inicio DELETA-VEICULO
         System.out.println("\n+----------------------------+");
         System.out.println("|                            |");
         System.out.println("|     Remover de veiculos    |");
@@ -350,7 +358,7 @@ public class Estacionamento {// Inicio CLASS
         } else {
             System.out.println("Renavam inválido!");
         }
-    }
+    }// Fim DELETA-VEICULO
 
     public static void editarveiculo() {// Inicio EDITA-VEICULO
         System.out.println("\n+----------------------------+");
@@ -389,7 +397,7 @@ public class Estacionamento {// Inicio CLASS
         }
     }// Fim EDITA-VEICULO
 
-    public static void listarveiculo() {// Inicio LISTA-VEICULO       
+    public static void listarveiculo() {// Inicio LISTA-VEICULO
         for (Carro car : cadCarro.getCarros()) {
             System.out.println("+-------------------------------------+");
             System.out.println("Renavam: " + car.getRenavam());
@@ -398,6 +406,88 @@ public class Estacionamento {// Inicio CLASS
             System.out.println("Cor: " + car.getCor());
         }
     }// Fim LISTA-VEICULO
+
+    public static void listagem() {// Inicio LISTAGEM
+        int op;
+        System.out.println("+--------------------------+");
+        System.out.println("|         LISTAGEM         |");
+        System.out.println("+--------------------------+");
+        System.out.println("|                          |");
+        System.out.println("| 1 - Global               |");
+        System.out.println("| 2 - Cliente              |");
+        System.out.println("| 3 - Veiculo              |");
+        System.out.println("| 4 - Veiculos por cliente |");
+        System.out.println("| 0 - Menu Principal       |");
+        System.out.println("|                          |");
+        System.out.println("+--------------------------+");
+        System.out.print("Escolha uma opção: ");
+        op = lerNum();
+
+        if (op == 1) {
+            System.out.println("+----------------------------+");
+            System.out.println("|      LISTAGEM GLOBAL       |");
+            System.out.println("+----------------------------+");
+            for (Pessoa pes : cadPessoa.getPessoas()) {
+                System.out.println("+-------------------------------------+");
+                System.out.println("CPF: " + pes.getCpf());
+                System.out.println("Nome: " + pes.getNomePessoa());
+                System.out.println("Idade: " + pes.getIdadePessoa());
+                System.out.println("Telefone: " + pes.getTelefone());
+                System.out.println("Endereço: " + pes.getEndereco());
+            }
+            for (Carro car : cadCarro.getCarros()) {
+                System.out.println("+-------------------------------------+");
+                System.out.println("Renavam: " + car.getRenavam());
+                System.out.println("Modelo: " + car.getModelo());
+                System.out.println("Placa : " + car.getPlaca());
+                System.out.println("Cor: " + car.getCor());
+            }
+        }
+        if (op == 2) {
+            System.out.println("+----------------------------+");
+            System.out.println("|      LISTAGEM CLIENTES     |");
+            System.out.println("+----------------------------+");
+            for (Pessoa pes : cadPessoa.getPessoas()) {
+                System.out.println("+-------------------------------------+");
+                System.out.println("CPF: " + pes.getCpf());
+                System.out.println("Nome: " + pes.getNomePessoa());
+                System.out.println("Idade: " + pes.getIdadePessoa());
+                System.out.println("Telefone: " + pes.getTelefone());
+                System.out.println("Endereço: " + pes.getEndereco());
+            }
+        }
+        if (op == 3) {
+            System.out.println("+----------------------------+");
+            System.out.println("|      LISTAGEM VEICULOS     |");
+            System.out.println("+----------------------------+");
+            for (Carro car : cadCarro.getCarros()) {
+                System.out.println("+-------------------------------------+");
+                System.out.println("Renavam: " + car.getRenavam());
+                System.out.println("Modelo: " + car.getModelo());
+                System.out.println("Placa : " + car.getPlaca());
+                System.out.println("Cor: " + car.getCor());
+            }
+        }
+        if (op == 4) {
+            for (Pessoa pes : cadPessoa.getPessoas()) {
+                for (Carro car : cadCarro.getCarros()) {
+                    if (car.getIdPessoa().equals(pes.getIdPessoa())) {
+                        System.out.println("+-------------------------------------+");
+                        System.out.println("CPF: " + pes.getCpf());
+                        System.out.println("Nome: " + pes.getNomePessoa());
+                        System.out.println("Idade: " + pes.getIdadePessoa());
+                        System.out.println("Renavam: " + car.getRenavam());
+                        System.out.println("Modelo: " + car.getModelo());
+                        System.out.println("Placa : " + car.getPlaca());
+                        System.out.println("Cor: " + car.getCor());
+                    }
+                }
+            }
+        }
+        if (op == 0) {
+            return;
+        }
+    }// Fim LISTAGEM
 
     public static void main(String[] args) {// Inicio MAIN
         cadPessoa.mockPessoas();
@@ -457,8 +547,8 @@ public class Estacionamento {// Inicio CLASS
                         }
                     } while (opSM != 0);
                     break;
-                case 4:
-
+                case 3:
+                    listagem();
                     break;
             }
         } while (opM != 0);
