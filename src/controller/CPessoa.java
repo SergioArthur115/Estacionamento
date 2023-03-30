@@ -1,16 +1,13 @@
-
 package controller;
 
 import java.util.ArrayList;
 import model.Pessoa;
-
 
 public class CPessoa {
 
     ArrayList<Pessoa> pessoas = new ArrayList<>();
     int idPessoa = 1;
 
-  
     public int geraID() {
         return this.idPessoa++;
     }
@@ -50,6 +47,7 @@ public class CPessoa {
         Pessoa p1 = new Pessoa();
         p1.setIdPessoa(this.geraID());
         p1.setNomePessoa("Jair Ferraz");
+        p1.setIdadePessoa(37);
         p1.setCpf("81550241052");
         p1.setEndereco("Avenida Nilópolis, 111");
         p1.setTelefone("51999889988");
@@ -58,10 +56,20 @@ public class CPessoa {
         Pessoa p2 = new Pessoa();
         p2.setIdPessoa(this.geraID());
         p2.setNomePessoa("Kuirmegoe");
+        p2.setIdadePessoa(90);
         p2.setCpf("49838050016");
         p2.setEndereco("Av. Venâncio Aires, 10");
         p2.setTelefone("5140028922");
         this.addPessoa(p2);
+
+        Pessoa p3 = new Pessoa();
+        p3.setIdPessoa(this.geraID());
+        p3.setNomePessoa("Ziona");
+        p3.setIdadePessoa(65);
+        p3.setCpf("17040166062");
+        p3.setEndereco("R. Espírito Santo, 234");
+        p3.setTelefone("51567642348");
+        this.addPessoa(p3);
     }
 
     /**
